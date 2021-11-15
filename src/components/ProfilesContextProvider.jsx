@@ -1,5 +1,4 @@
 import React from 'react';
-import mockProfiles from '../profiles.json';
 
 export const ProfileContext = React.createContext({
   profiles: [],
@@ -9,6 +8,10 @@ function ProfilesReducer(state, action) {
   let profiles;
 
   switch (action.type) {
+    case 'loadData':
+      profiles = action.payload;
+      return { profiles };
+      
     case 'ascending':
       profiles = [...state.profiles];
       profiles.sort((profileA, profileB) => (profileA.handle > profileB.handle ? 1 : -1));
@@ -25,8 +28,9 @@ function ProfilesReducer(state, action) {
 }
 
 function ProfilesContextProvider({ children }) {
+  const profiles = []
   const [state, dispatch] = React.useReducer(ProfilesReducer, {
-    profiles: mockProfiles,
+    profiles: profiles,
   });
 
   return (

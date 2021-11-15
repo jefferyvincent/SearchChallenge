@@ -1,8 +1,10 @@
 import React from 'react';
-import { ProfileContext } from './ProfilesContextProvider';
-import MinimalButton from './MinimalButton';
-import Header from './Header';
-import SearchCard from './SearchCard';
+import { ProfileContext } from '../../components/ProfilesContextProvider';
+import MinimalButton from '../../components/MinimalButton/MinimalButton';
+import Header from '../../components/Header/Header';
+import SearchCard from '../../components/SearchCard/SearchCard';
+import { CountDown } from 'components/CountDown/CountDown';
+import { ContentContainer, Main, Navigation } from './SearchPage.styles'
 
 class SearchPage extends React.Component {
   static contextType = ProfileContext;
@@ -21,9 +23,11 @@ class SearchPage extends React.Component {
     return (
       <React.Fragment>
         <Header />
+        <Main>
+          <Navigation>
+            
+            <CountDown />
 
-        <main style={{ margin: 24 }}>
-          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
             <MinimalButton disabled>
               <img src="filter.svg" width={22} alt="filter" />
             </MinimalButton>
@@ -35,18 +39,13 @@ class SearchPage extends React.Component {
             <MinimalButton onClick={this.handleSortDescending}>
               <img src="./descending.svg" width={22} alt="Sort descending" />
             </MinimalButton>
-          </div>
+          </Navigation>
 
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr 1fr 1fr',
-              gridGap: '16px',
-            }}
-          >
+          <ContentContainer>
             {profiles.map((profile) => (
               <SearchCard
                 key={profile.id}
+                id={profile.id}
                 photoUrl={profile.photoUrl}
                 handle={profile.handle}
                 location={profile.location}
@@ -54,8 +53,8 @@ class SearchPage extends React.Component {
                 photoCount={profile.photoCount}
               />
             ))}
-          </div>
-        </main>
+          </ContentContainer>
+        </Main>
       </React.Fragment>
     );
   }
